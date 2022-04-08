@@ -30,15 +30,16 @@ namespace Logic
         public User DeleteUser(User user)
         {
             User userFound = users.Find(u => u.id == user.id);
-            if(userFound == null)
+            if(userFound != null)
             {
                 users.Remove(userFound);
+                return user;
             }
             else
             {
-                return new User() { Name = "0", id = 0 };
+                return null;
             }
-            return user;
+            
 
 
 
@@ -48,10 +49,19 @@ namespace Logic
         {
 
             User userUpdate = users.Find(u => u.id == user.id);
-            userUpdate.Name = user.Name;
-            userUpdate.id = user.id; 
+            if(userUpdate == null)
+            {
+                return null;
+            }
+            else
+            {
+                userUpdate.Name = user.Name;
+                userUpdate.id = user.id;
+                return user;
+            }
+            
 
-            return user;
+            
         }
     }
 }
