@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace Logic
 {
-    public class UserManager
+    public class UserManager : IUserManager
     {
         public List<User> users { get; set; }
         public UserManager()
         {
             users = new List<User>()
             {
-                new User() { Name = "Angy", id = 1 },
-                new User() { Name = "Victor",id =2 },
-                new User() { Name = "Samantha", id = 3 }
+                new User() { Name = "Angy", id = 1},
+                new User() { Name = "Victor", id = 2},
+                new User() { Name = "Samantha", id = 3}
             };
         }
         public List<User> GetUsers()
@@ -21,25 +21,35 @@ namespace Logic
             
         }
         
-        public User PostUsers(User user)
+        public User PostUser(User user)
         {
            users.Add(user);
             return user;
         }
         
-        public User DeleteUsers(User user)
+        public User DeleteUser(User user)
         {
-            users.Remove(user);
+            User userFound = users.Find(u => u.id == user.id);
+            if(userFound == null)
+            {
+                users.Remove(userFound);
+            }
+            else
+            {
+                return new User() { Name = "0", id = 0 };
+            }
             return user;
+
+
+
         }
         
-        public User PutUsers(User first, User user)
+        public User PutUser(User user)
         {
-           
-            int index = users.FindIndex(first => first.id ==user.id);
-            
-            users.RemoveAt(index);
-            users.Add(user);
+
+            User userUpdate = users.Find(u => u.id == user.id);
+            userUpdate.Name = user.Name;
+            userUpdate.id = user.id; 
 
             return user;
         }

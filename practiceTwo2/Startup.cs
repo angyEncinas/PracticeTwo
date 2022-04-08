@@ -1,3 +1,4 @@
+using Logic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -21,7 +22,7 @@ namespace practiceTwo2
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsetting.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: false, reloadOnChange: true)
                 .AddEnvironmentVariables();
 
@@ -35,13 +36,15 @@ namespace practiceTwo2
         {
 
             services.AddControllers();
+
+            services.AddSingleton<IUserManager, UserManager> ();
             services.AddSwaggerGen(options =>
             {
                 var groupName = "v1";
 
                 options.SwaggerDoc(groupName, new OpenApiInfo
                 {
-                    Title = $"Practice Two {groupName}",
+                    Title = $"{Configuration.GetSection("Application").GetSection("Title").Value}{groupName}",
                     Version = groupName,
                     Description = "Practice Two API",
                     Contact = new OpenApiContact
