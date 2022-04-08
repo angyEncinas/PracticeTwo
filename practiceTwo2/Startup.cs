@@ -22,7 +22,7 @@ namespace practiceTwo2
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsetting.json", optional: false, reloadOnChange: true)
-                .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: false, reloadOnChange: true)
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
