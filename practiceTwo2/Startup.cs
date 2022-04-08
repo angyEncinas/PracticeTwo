@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace practiceTwo2
 {
     public class Startup
@@ -28,9 +29,22 @@ namespace practiceTwo2
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "practiceTwo2", Version = "v1" });
+                var groupName = "v1";
+
+                options.SwaggerDoc(groupName, new OpenApiInfo
+                {
+                    Title = $"Practice Two {groupName}",
+                    Version = groupName,
+                    Description = "Practice Two API",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Practice Two",
+                        Email = string.Empty,
+                        Url = new Uri("https://angy_encinas.com/"),
+                    }
+                });
             });
         }
 
@@ -45,6 +59,12 @@ namespace practiceTwo2
             }
 
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "PracticeTwo API V1");
+            });
 
             app.UseRouting();
 
