@@ -28,11 +28,19 @@ namespace practiceTwo2.Controllers
         public IActionResult DeleteUser(User user)
         
         {
+            if (_userManager.DeleteUser(user) == null)
+            {
+                return NotFound("The user Id does not exist");
+            }
             return Ok(_userManager.DeleteUser(user));
         }
         [HttpPut]
         public IActionResult PutUser(User user)
         {
+            if (_userManager.PutUser(user) == null)
+            {
+                return NotFound("The user Id does not exist");
+            }
             return Ok(_userManager.PutUser(user));
         }
     }
